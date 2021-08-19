@@ -8,8 +8,9 @@ For this project, we use Nginx that runs in a Docker container
 
 ## File structure
 
-Dockerfile - instructions to build the docker image
-`/app` - hosts a static HTML page
+- Dockerfile - instructions to build the docker image
+- nginx.conf - configuration file for nginx
+- `/app` - hosts a static HTML page
 
 ## Installation instructions
 
