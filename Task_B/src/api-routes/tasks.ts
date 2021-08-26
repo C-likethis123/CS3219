@@ -1,20 +1,16 @@
 import express from 'express';
 
-import tasks from '../tasks.json';
+import taskController from '../controllers/tasks';
 
 const taskRouter = express.Router();
-taskRouter.get('/:id', (req, res) => {
-  const filteredTasks = tasks.filter((task) => `${task.id}` === `${req.query.id}`);
-  res.send(filteredTasks);
-})
-taskRouter.get('/', (req, res) => res.send(tasks));
+taskRouter.route('/:id')
+  .get(taskController.getTask);
+  post(taskController.updateTask);
 
-taskRouter.post('/', (req, res) => {
-  tasks.push()
-})
+taskRouter.get('/', taskController.getAllTasks);
 
-taskRouter.delete('/', (req, res) => {
-  res.send("Delete")
-})
+taskRouter.post('/', taskController.createTask);
+
+taskRouter.delete('/', taskController.deleteTask);
 
 export default taskRouter;
