@@ -1,12 +1,18 @@
-import mongoose from 'mongoose';
+import {Schema, model, Model} from 'mongoose';
 
-const taskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  date: { type: Date, default: Date.now },
+export interface ITask {
+  title: string;
+  date: Date;
+  description: string;
+}
+
+const taskSchema: Schema<ITask> = new Schema({
+  title: {type: String, required: true},
+  date: {type: Date, default: Date.now},
   description: String,
 });
 
-const Task = mongoose.model('Task', taskSchema);
+const Task: Model<ITask> = model('Task', taskSchema);
 
 export default Task;
 
