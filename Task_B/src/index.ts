@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import taskRouter from './api-routes/tasks';
+import errorMiddleware from './validation/errorMiddleware';
 
 const app = express();
 const port = 8080;
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use('/api/tasks', taskRouter);
+app.use(errorMiddleware);
 
 mongoose.connect('mongodb://localhost/todos', { useNewUrlParser: true, useUnifiedTopology: true });
 

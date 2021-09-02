@@ -3,17 +3,18 @@ import Task, {ITask} from '../models/tasks';
 import {Request, Response, NextFunction} from 'express';
 
 import {validationResult} from 'express-validator';
+import TaskNotFoundException from '../exceptions/TaskNotFoundException';
 
 type ControllerMethod = (req: Request, res: Response, next: NextFunction) => void;
 
 const getTask: ControllerMethod = (req, res, next) => {
   Task.findById(req.params.id, (err: Error, task: ITask) => {
-    if (err) {
-      res.send(err);
-    } else {
+    if (task) {
       res.json({
         data: task,
       });
+    } else {
+      next(new TaskNotFoundException(req.params.id))
     }
   });
 };
@@ -61,16 +62,26 @@ const updateTask: ControllerMethod = (req, res) => {
   })
 }
 
-const deleteTask: ControllerMethod = (req, res) => {
-  Task.deleteOne({_id: req.params.id}, (err: Error) => {
-    if (err) {
-      res.send(err);
-    } else {
+const deleteTask: ControllerMethod = (req, res, next) => {
+  Task.deleteOne({_id: req.params.id})
+    .then(() => {
       res.json({
         data: req.params.id,
       })
+    })
+    .catch(() => {
+      next(new TaskNotFoundException(req.params.id))
+    })
+}
+
+const deleteAll: ControllerMethod = (req, res) => {
+  Task.deleteMany({}, (err: Error) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send("Deleted everything!");
     }
   })
 }
 
-export default {getTask, updateTask, getAllTasks, createTask, deleteTask};
+export default {getTask, updateTask, getAllTasks, createTask, deleteTask, deleteAll};
