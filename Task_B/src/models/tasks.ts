@@ -8,7 +8,7 @@ export interface ITask {
 
 const taskSchema: Schema<ITask> = new Schema({
   title: {type: String, required: true},
-  date: {type: Date, default: Date.now},
+  date: {type: Number, default: new Date().valueOf()},
   description: String,
 });
 
