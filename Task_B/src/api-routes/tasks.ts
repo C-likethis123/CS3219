@@ -6,7 +6,10 @@ import taskSchemaValidator from '../validation/taskSchemaValidator';
 const taskRouter = express.Router();
 taskRouter.route('/:id')
   .get(taskController.getTask)
-  .post(taskController.updateTask)
+  .post(
+    taskSchemaValidator,
+    taskController.updateTask
+  )
   .delete(taskController.deleteTask);
 
 taskRouter.route('/')
