@@ -1,10 +1,12 @@
 import Task, {ITask} from '../models/tasks';
 
-import {Request, Response} from 'express';
+import {Request, Response, NextFunction} from 'express';
 
-type ControllerMethod = (req: Request, res: Response) => void;
+import {validationResult} from 'express-validator';
 
-const getTask: ControllerMethod = (req, res) => {
+type ControllerMethod = (req: Request, res: Response, next: NextFunction) => void;
+
+const getTask: ControllerMethod = (req, res, next) => {
   Task.findById(req.params.id, (err: Error, task: ITask) => {
     if (err) {
       res.send(err);
@@ -29,6 +31,10 @@ const getAllTasks: ControllerMethod = (req, res) => {
 }
 
 const createTask: ControllerMethod = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array()});
+  }
   const { title, date, description } = req.body;
   Task.create({ title, date, description }, (err: Error, task: ITask) => {
     if (err) {

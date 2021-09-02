@@ -1,6 +1,7 @@
 import express from 'express';
 
 import taskController from '../controllers/tasks';
+import taskSchemaValidator from '../validation/taskSchemaValidator';
 
 const taskRouter = express.Router();
 taskRouter.route('/:id')
@@ -10,6 +11,9 @@ taskRouter.route('/:id')
 
 taskRouter.route('/')
   .get(taskController.getAllTasks)
-  .post(taskController.createTask);
+  .post(
+    taskSchemaValidator,
+    taskController.createTask)
+  .delete(taskController.deleteAll);
 
 export default taskRouter;
