@@ -49,6 +49,10 @@ const createTask: ControllerMethod = (req, res) => {
 }
 
 const updateTask: ControllerMethod = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array()});
+  }
   const { id } = req.params;
   const { title, date, description } = req.body;
   Task.findOneAndUpdate({ _id: id }, { title, date, description }, { new: true })
