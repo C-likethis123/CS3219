@@ -48,18 +48,18 @@ const createTask: ControllerMethod = (req, res) => {
   })
 }
 
-const updateTask: ControllerMethod = (req, res) => {
+const updateTask: ControllerMethod = (req, res, next) => {
   const { id } = req.params;
   const { title, date, description } = req.body;
-  Task.findOneAndUpdate({ _id: id }, { title, date, description }, { new: true }, (err: Error, task: ITask) => {
-    if (err) {
-      res.send(err);
-    } else {
+  Task.findOneAndUpdate({ _id: id }, { title, date, description }, { new: true })
+    .then((task: ITask) => {
       res.json({
         data: task,
       })
-    }
-  })
+    })
+    .catch(() => {
+      next(new TaskNotFoundException(id))
+    });
 }
 
 const deleteTask: ControllerMethod = (req, res, next) => {
