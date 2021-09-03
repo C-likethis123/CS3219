@@ -1,8 +1,8 @@
-import { checkSchema } from "express-validator";
+import {checkSchema} from "express-validator";
 const taskSchemaValidator = checkSchema({
   title: {
     in: 'body',
-    isLength: { options: {min: 1} },
+    isLength: {options: {min: 1}},
     isString: true,
   },
   date: {
@@ -14,6 +14,11 @@ const taskSchemaValidator = checkSchema({
     in: 'body',
     optional: true,
     isString: true,
+  },
+  isCompleted: {
+    in: 'body',
+    optional: true,
+    isBoolean: true,
   }
 });
 

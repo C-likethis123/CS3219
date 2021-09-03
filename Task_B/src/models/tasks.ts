@@ -10,6 +10,7 @@ const taskSchema: Schema<ITask> = new Schema({
   title: {type: String, required: true},
   date: {type: Number, default: new Date().valueOf()},
   description: String,
+  isCompleted: {type: Boolean, default: false},
 });
 
 const Task: Model<ITask> = model('Task', taskSchema);
