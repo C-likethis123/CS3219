@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
-import {makeStyles, TextField, Button} from '@material-ui/core';
-import {KeyboardDatePicker} from '@material-ui/pickers';
+import {makeStyles, TextField, Button, FormGroup} from '@material-ui/core';
 
 import useTaskApi from '../api/useTaskApi';
 
@@ -10,7 +9,7 @@ const AddToDo = () => {
   const {createTask} = useTaskApi();
 
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const createTaskHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,10 +27,12 @@ const AddToDo = () => {
   const changeDescription = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
   return (
     <form autoComplete="off" className={classes.root} onSubmit={createTaskHandler}>
-      <TextField label="Add a task" variant="outlined" value={title} onChange={changeTitle} />
-      <TextField label="Date" format="dd/MM/yyyy" type="date" value={date} onChange={changeDate} />
-      <TextField label="Description" value={description} onChange={changeDescription} />
-      <Button type="submit">Add Task</Button>
+      <FormGroup>
+        <TextField label="Title" autoFocus value={title} onChange={changeTitle} />
+        <TextField label="Date" type="date" InputLabelProps={{shrink: true}} value={date} onChange={changeDate} />
+        <TextField label="Description" value={description} onChange={changeDescription} />
+      </FormGroup>
+      <Button type="submit" variant="contained" color="primary">Add Task</Button>
     </form>
   )
 };
@@ -40,8 +41,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
     '& .MuiTextField-root': {
-      width: '80%',
+      width: '50%',
     },
+    '& .MuiFormGroup-root': {
+      alignContent: 'center',
+    },
+    '& .MuiButton-root': {
+      marginTop: theme.spacing(2),
+    }
   },
 }));
 
