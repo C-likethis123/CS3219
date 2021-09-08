@@ -13,6 +13,14 @@ const taskSchema: Schema<ITask> = new Schema({
   isCompleted: {type: Boolean, default: false},
 });
 
+taskSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+});
+
 const Task: Model<ITask> = model('Task', taskSchema);
 
 export default Task;
