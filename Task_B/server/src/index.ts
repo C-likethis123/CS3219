@@ -20,7 +20,8 @@ app.use(bodyParser.json());
 app.use('/api/tasks', taskRouter);
 app.use(errorMiddleware);
 
-mongoose.connect('mongodb://mongo:27017', {useNewUrlParser: true, useUnifiedTopology: true});
+const DB_URL = process.env.DB_URL || 'mongodb://mongo:27017';
+mongoose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 if (db) {
