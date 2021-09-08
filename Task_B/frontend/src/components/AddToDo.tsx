@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {makeStyles, TextField, Button, FormGroup} from '@material-ui/core';
 
-import useTaskApi from '../api/useTaskApi';
+import {TaskContext} from '../contexts/TaskContext';
 
 const AddToDo = () => {
   const classes = useStyles();
-  const {createTask} = useTaskApi();
-
+  
+  const {createTask} = useContext(TaskContext);
+  
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
@@ -19,7 +20,6 @@ const AddToDo = () => {
       description,
     };
     createTask(task);
-
   }
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);

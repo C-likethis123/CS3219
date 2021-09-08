@@ -8,7 +8,7 @@ const TaskList = () => {
 
   return (
     <>
-      {tasks.map(({_id, title, date, description, isCompleted}) => <TaskDisplay key={_id} id={_id} title={title} date={date} description={description} isCompleted={isCompleted} />)}
+      {tasks.map(({id, title, date, description, isCompleted}) => <TaskDisplay key={id} id={id} title={title} date={date} description={description} isCompleted={isCompleted} />)}
     </>
   )
 }

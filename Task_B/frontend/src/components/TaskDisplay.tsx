@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {makeStyles, Button} from '@material-ui/core';
 import {Delete as DeleteIcon} from '@material-ui/icons';
 
-import useTaskApi from '../api/useTaskApi';
+import {TaskContext} from '../contexts/TaskContext';
 
 type Task = {
   id: string,
   title: string,
   date?: number,
   description?: string,
-  isCompleted: boolean,
+  isCompleted?: boolean,
 };
 
 const TaskDisplay: React.FC<Task> = ({
@@ -22,11 +22,8 @@ const TaskDisplay: React.FC<Task> = ({
 }) => {
   const classes = useStyles();
 
-  const {deleteTask} = useTaskApi();
-
-  const deleteTaskHandler = () => {
-    deleteTask(id);
-  }
+  const {deleteTask} = useContext(TaskContext);
+  const deleteTaskHandler = (_: React.MouseEvent) => deleteTask(id);
 
   return (
     <div className={classes.root}>
