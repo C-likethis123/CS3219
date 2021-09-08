@@ -9,21 +9,26 @@ type Task = {
 const API_PREFIX = '/api/tasks';
 
 const useTaskApi = () => {
-  const getAllTasks = async () => {
+  const getAllTasksApi = async () => {
     const {data: {data: tasks}} = await axiosInstance.get(API_PREFIX);
     return tasks;
   }
 
-  const createTask = async (task: Task) => {
-    const {data: createdTask} = await axiosInstance.post(API_PREFIX, task);
+  const createTaskApi = async (task: Partial<Task>) => {
+    const {data: {data: createdTask}} = await axiosInstance.post(API_PREFIX, task);
     return createdTask;
   }
 
-  const deleteTask = async (id: string) => {
+  const deleteTaskApi = async (id: string) => {
     const {data: {data: deletedId}} = await axiosInstance.delete(`${API_PREFIX}/${id}`);
     return deletedId;
   }
-  return {getAllTasks, createTask, deleteTask};
+
+  const editTaskApi = async (task: Task) => {
+    const {data: {data: editedTask}} = await axiosInstance.post(`${API_PREFIX}/${task.id}`);
+    return editedTask;
+  }
+  return {getAllTasksApi, createTaskApi, deleteTaskApi, editTaskApi};
 };
 
 export default useTaskApi;
