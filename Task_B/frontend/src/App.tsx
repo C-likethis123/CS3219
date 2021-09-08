@@ -3,23 +3,17 @@ import './App.css';
 
 import TopBar from './components/TopBar';
 import AddToDo from './components/AddToDo';
-import TaskDisplay from './components/TaskDisplay';
+import {TaskContext, TaskProvider} from './contexts/TaskContext';
+import TaskList from './components/TaskList';
 
 function App() {
-  const [tasks, setTasks] = React.useState([]);
-
   return (
     <div className="App">
       <TopBar />
-      <AddToDo />
-      {tasks.map(({
-        _id,
-        title,
-        date,
-        description,
-        isCompleted,
-      }) => <TaskDisplay key={_id} id={_id} title={title} date={date} description={description} isCompleted={isCompleted} />
-      )}
+      <TaskProvider>
+        <AddToDo />
+        <TaskList />
+      </TaskProvider>
     </div>
   );
 }
