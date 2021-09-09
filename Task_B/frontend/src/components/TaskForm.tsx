@@ -7,20 +7,23 @@ import {Task} from '../types/Task';
 type TaskFormProps = {
   apiHandler: (task: Partial<Task>) => Promise<void>,
   task?: Partial<Task>,
+  callback?: Function;
 }
-const TaskForm: React.FC<TaskFormProps> = ({apiHandler, task}) => {
+const TaskForm: React.FC<TaskFormProps> = ({apiHandler, task: taskProps, callback}) => {
   const classes = useStyles();
-  const [title, setTitle] = useState(task?.title ?? '');
-  const [date, setDate] = useState(task?.date ?? '');
-  const [description, setDescription] = useState(task?.description ?? '');
+  const [title, setTitle] = useState(taskProps?.title ?? '');
+  const [date, setDate] = useState(taskProps?.date ?? '');
+  const [description, setDescription] = useState(taskProps?.description ?? '');
   const createTaskHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const task = {
+      ...taskProps,
       title,
       date: new Date(date).valueOf(),
       description,
     };
-    apiHandler(task as Partial<Task>);
+    apiHandler(task as Partial<Task>)
+      .then(() => callback?.());
   }
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);

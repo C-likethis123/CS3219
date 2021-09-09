@@ -1,8 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {makeStyles, Button} from '@material-ui/core';
-import {Delete as DeleteIcon} from '@material-ui/icons';
+import {Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons';
 
+import EditableTask from './EditableTask';
 import {TaskContext} from '../contexts/TaskContext';
 
 import {Task} from '../types/Task';
@@ -14,22 +15,34 @@ const TaskDisplay: React.FC<Task> = ({
   description,
   isCompleted
 }) => {
+  const [editing, setEditing] = useState(false);
   const classes = useStyles();
 
   const {deleteTask} = useContext(TaskContext);
   const deleteTaskHandler = (_: React.MouseEvent) => deleteTask(id);
 
+  const toggleEdit = () => setEditing(!editing);
+
   return (
     <div className={classes.root}>
-      <input type="checkbox" checked={isCompleted} />
-      <div>
-        <b>{title}</b>
-        <div className={classes.information}>{date}</div>
-        <div className={classes.information}>{description}</div>
-      </div>
-      <Button onClick={deleteTaskHandler}>
-        <DeleteIcon />
-      </Button>
+      {editing
+        ? <EditableTask task={{id, title, date, description, isCompleted}} toggleEdit={toggleEdit} />
+        : (
+          <>
+            <input type="checkbox" checked={isCompleted} />
+            <div>
+              <b>{title}</b>
+              <div className={classes.information}>{date}</div>
+              <div className={classes.information}>{description}</div>
+            </div>
+            <Button onClick={toggleEdit}>
+              <EditIcon />
+            </Button>
+            <Button onClick={deleteTaskHandler}>
+              <DeleteIcon />
+            </Button>
+          </>
+        )}
     </div>
   )
 };

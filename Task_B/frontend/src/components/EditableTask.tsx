@@ -7,12 +7,13 @@ import {Task} from '../types/Task';
 
 type EditableTaskProps = {
   task: Partial<Task>,
+  toggleEdit: () => void;
 };
 
-const EditableTask: React.FC<EditableTaskProps> = ({task}) => {
+const EditableTask: React.FC<EditableTaskProps> = ({task, toggleEdit}) => {
   const {editTask} = useContext(TaskContext);
   return (
-    <TaskForm apiHandler={editTask} task={task} />
+    <TaskForm apiHandler={editTask} task={task} callback={toggleEdit} />
   )
 }
 
