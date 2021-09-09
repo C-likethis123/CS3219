@@ -22,9 +22,11 @@ const TaskDisplay: React.FC<Task> = ({
   return (
     <div className={classes.root}>
       <input type="checkbox" checked={isCompleted} />
-      <div>{title}</div>
-      <div>{date}</div>
-      <div>{description}</div>
+      <div>
+        <b>{title}</b>
+        <div className={classes.information}>{date}</div>
+        <div className={classes.information}>{description}</div>
+      </div>
       <Button onClick={deleteTaskHandler}>
         <DeleteIcon />
       </Button>
@@ -37,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     display: 'flex',
   },
+  information: {
+    color: theme.palette.grey[600],
+  }
 }));
 
 export default TaskDisplay;
