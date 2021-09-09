@@ -22,7 +22,7 @@ const useTaskApi = () => {
   }
 
   const editTaskApi = async (task: Partial<Task>) => {
-    const {data: {data: editedTask}} = await axiosInstance.post(`${API_PREFIX}/${task.id}`);
+    const {data: {data: editedTask}} = await axiosInstance.post(`${API_PREFIX}/${task.id}`, task);
     return editedTask;
   }
   return {getAllTasksApi, createTaskApi, deleteTaskApi, editTaskApi};
