@@ -8,7 +8,7 @@ export interface ITask {
 
 const taskSchema: Schema<ITask> = new Schema({
   title: {type: String, required: true},
-  date: {type: Number, default: new Date().valueOf()},
+  date: {type: Date, default: new Date()},
   description: String,
   isCompleted: {type: Boolean, default: false},
 });
@@ -16,6 +16,9 @@ const taskSchema: Schema<ITask> = new Schema({
 taskSchema.set('toJSON', {
   transform: function (doc, ret, options) {
     ret.id = ret._id;
+    if (ret.date) {
+      ret.date?.toLocaleDateString();
+    }
     delete ret._id;
     delete ret.__v;
   }

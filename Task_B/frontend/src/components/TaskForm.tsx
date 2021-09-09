@@ -20,7 +20,7 @@ const TaskForm: React.FC<TaskFormProps> = ({isEditable = false, apiHandler, task
     const task = {
       ...taskProps,
       title,
-      date: new Date(date).valueOf(),
+      date,
       description,
     };
     apiHandler(task as Partial<Task>)

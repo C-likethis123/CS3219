@@ -34,10 +34,10 @@ const getAllTasks: ControllerMethod = (req, res) => {
 const createTask: ControllerMethod = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array()});
+    return res.status(400).json({errors: errors.array()});
   }
-  const { title, date, description } = req.body;
-  Task.create({ title, date, description }, (err: Error, task: ITask) => {
+  const {title, date, description} = req.body;
+  Task.create({title, date, description}, (err: Error, task: ITask) => {
     if (err) {
       res.send(err);
     } else {
@@ -51,11 +51,11 @@ const createTask: ControllerMethod = (req, res) => {
 const updateTask: ControllerMethod = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array()});
+    return res.status(400).json({errors: errors.array()});
   }
-  const { id } = req.params;
-  const { title, date, description } = req.body;
-  Task.findOneAndUpdate({ _id: id }, { title, date, description }, { new: true })
+  const {id} = req.params;
+  const {title, date, description, isCompleted} = req.body;
+  Task.findOneAndUpdate({_id: id}, {title, date, description, isCompleted}, {new: true})
     .then((task: ITask) => {
       res.json({
         data: task,

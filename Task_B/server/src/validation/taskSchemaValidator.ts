@@ -4,11 +4,11 @@ const taskSchemaValidator = checkSchema({
     in: 'body',
     isLength: {options: {min: 1}},
     isString: true,
+    errorMessage: 'The title cannot be empty!',
   },
   date: {
     in: 'body',
     optional: true,
-    isInt: true,
   },
   description: {
     in: 'body',

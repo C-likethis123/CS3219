@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 
-import {makeStyles, Button, Container} from '@material-ui/core';
+import {makeStyles, Button, Container, Checkbox} from '@material-ui/core';
 import {Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons';
 
 import EditableTask from './EditableTask';
@@ -18,16 +18,30 @@ const TaskDisplay: React.FC<Task> = ({
   const [editing, setEditing] = useState(false);
   const classes = useStyles();
 
-  const {deleteTask} = useContext(TaskContext);
+  const {deleteTask, editTask} = useContext(TaskContext);
   const deleteTaskHandler = (_: React.MouseEvent) => deleteTask(id);
 
   const toggleEdit = () => setEditing(!editing);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    editTask({
+      id, 
+      isCompleted: event.target.checked,
+      title,
+      date,
+      description
+    });
+  };
 
   return editing
         ? <EditableTask task={{id, title, date, description, isCompleted}} toggleEdit={toggleEdit} />
         : (
     <div className={classes.root}>
-            <input type="checkbox" checked={isCompleted} />
+    <Checkbox
+        checked={isCompleted}
+        onChange={handleChange}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
             <Container className={classes.taskContents}>
               <b className={classes.title}>{title}</b>
               <div className={classes.information}>{date}</div>
