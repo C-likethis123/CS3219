@@ -13,7 +13,7 @@ type EditableTaskProps = {
 const EditableTask: React.FC<EditableTaskProps> = ({task, toggleEdit}) => {
   const {editTask} = useContext(TaskContext);
   return (
-    <TaskForm apiHandler={editTask} task={task} callback={toggleEdit} />
+    <TaskForm isEditable={true} apiHandler={editTask} task={task} callback={toggleEdit} />
   )
 }
 

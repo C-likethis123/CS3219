@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 
-import {makeStyles, Button} from '@material-ui/core';
+import {makeStyles, Button, Container} from '@material-ui/core';
 import {Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons';
 
 import EditableTask from './EditableTask';
@@ -23,27 +23,23 @@ const TaskDisplay: React.FC<Task> = ({
 
   const toggleEdit = () => setEditing(!editing);
 
-  return (
-    <div className={classes.root}>
-      {editing
+  return editing
         ? <EditableTask task={{id, title, date, description, isCompleted}} toggleEdit={toggleEdit} />
         : (
-          <>
+    <div className={classes.root}>
             <input type="checkbox" checked={isCompleted} />
-            <div>
-              <b>{title}</b>
+            <Container className={classes.taskContents}>
+              <b className={classes.title}>{title}</b>
               <div className={classes.information}>{date}</div>
               <div className={classes.information}>{description}</div>
-            </div>
+            </Container>
             <Button onClick={toggleEdit}>
               <EditIcon />
             </Button>
             <Button onClick={deleteTaskHandler}>
               <DeleteIcon />
             </Button>
-          </>
-        )}
-    </div>
+          </div>
   )
 };
 
@@ -51,10 +47,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
     display: 'flex',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: '1.5rem',
   },
   information: {
     color: theme.palette.grey[600],
-  }
+  },
+  taskContents: {
+    textAlign: 'left',
+  },
 }));
 
 export default TaskDisplay;

@@ -5,11 +5,12 @@ import {makeStyles, TextField, Button, FormGroup} from '@material-ui/core';
 import {Task} from '../types/Task';
 
 type TaskFormProps = {
+  isEditable?: boolean,
   apiHandler: (task: Partial<Task>) => Promise<void>,
   task?: Partial<Task>,
   callback?: Function;
 }
-const TaskForm: React.FC<TaskFormProps> = ({apiHandler, task: taskProps, callback}) => {
+const TaskForm: React.FC<TaskFormProps> = ({isEditable = false, apiHandler, task: taskProps, callback}) => {
   const classes = useStyles();
   const [title, setTitle] = useState(taskProps?.title ?? '');
   const [date, setDate] = useState(taskProps?.date ?? '');
@@ -36,7 +37,7 @@ const TaskForm: React.FC<TaskFormProps> = ({apiHandler, task: taskProps, callbac
         <TextField label="Date" type="date" InputLabelProps={{shrink: true}} value={date} onChange={changeDate} />
         <TextField label="Description" value={description} onChange={changeDescription} />
       </FormGroup>
-      <Button type="submit" variant="contained" color="primary">Add Task</Button>
+      <Button type="submit" variant="contained" color="primary">{isEditable ? 'Edit' : 'Add'} Task</Button>
     </form>
   )
 }
@@ -44,12 +45,6 @@ const TaskForm: React.FC<TaskFormProps> = ({apiHandler, task: taskProps, callbac
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
-    '& .MuiTextField-root': {
-      width: '50%',
-    },
-    '& .MuiFormGroup-root': {
-      alignContent: 'center',
-    },
     '& .MuiButton-root': {
       marginTop: theme.spacing(2),
     }
