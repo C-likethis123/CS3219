@@ -1,10 +1,7 @@
 import React from 'react';
 import axiosInstance from './axiosConfig';
 
-type Task = {
-  id?: string
-  title: string
-};
+import {Task} from '../types/Task';
 
 const API_PREFIX = '/api/tasks';
 

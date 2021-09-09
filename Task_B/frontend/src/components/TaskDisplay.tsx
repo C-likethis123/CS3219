@@ -5,13 +5,7 @@ import {Delete as DeleteIcon} from '@material-ui/icons';
 
 import {TaskContext} from '../contexts/TaskContext';
 
-type Task = {
-  id: string,
-  title: string,
-  date?: number,
-  description?: string,
-  isCompleted?: boolean,
-};
+import {Task} from '../types/Task';
 
 const TaskDisplay: React.FC<Task> = ({
   id,
