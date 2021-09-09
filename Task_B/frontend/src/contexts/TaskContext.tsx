@@ -48,7 +48,7 @@ const useInitialiseState = () => {
     }
   };
 
-  const editTask = async (task: Task) => {
+  const editTask = async (task: Partial<Task>) => {
     try {
       const editedTask = await editTaskApi(task);
       setTasks(tasks.map(task => {

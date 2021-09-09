@@ -21,7 +21,7 @@ const useTaskApi = () => {
     return deletedId;
   }
 
-  const editTaskApi = async (task: Task) => {
+  const editTaskApi = async (task: Partial<Task>) => {
     const {data: {data: editedTask}} = await axiosInstance.post(`${API_PREFIX}/${task.id}`);
     return editedTask;
   }
