@@ -1,0 +1,13 @@
+{
+  "name": "Task_A2",
+  "version": "1.0.0",
+  "description": "My submission for Task A2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
